@@ -1,7 +1,7 @@
 module.exports = {
 	context: __dirname + '/src/',
 	entry: {
-		schedule: './index.ts',
+		schedule: ['babel-regenerator-runtime', './index.ts'],
 		example: './example/index.js'
 	},
 	output: {
@@ -21,7 +21,7 @@ module.exports = {
 				test: /\.js$/,
 				use: [{
 					loader: 'babel-loader',
-					options: { presets: ['es2015', 'stage-0'] }
+					options: { presets: ['node6', 'stage-0'] }
 				}]
 			}
 		]
