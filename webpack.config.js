@@ -1,9 +1,14 @@
 module.exports = {
 	context: __dirname + '/src/',
-	entry: './index.ts',
+	entry: {
+		schedule: './index.ts',
+		example: './example/index.js'
+	},
 	output: {
-		filename: 'bundle.js',
-		path: __dirname + '/dist/'
+		filename: '[name].bundle.js',
+		path: __dirname + '/dist/',
+		library: ['Schedule'],
+		libraryTarget: 'umd',
 	},
 	module: {
 		rules: [
@@ -12,6 +17,13 @@ module.exports = {
 				loader: 'awesome-typescript-loader',
 				exclude: /node_modules/,
 			},
+			{
+				test: /\.js$/,
+				use: [{
+					loader: 'babel-loader',
+					options: { presets: ['es2015', 'stage-0'] }
+				}]
+			}
 		]
 	},
 	resolve: {

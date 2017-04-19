@@ -1,35 +1,34 @@
-import { IScheduleData } from '../model';
-
 import { lessons } from './lessons';
+import { ISchedule } from '../models/schedule';
 
-const testClassrooms = [
+export const testClassrooms = [
   {
     id: '1',
-    title: 'ауд. Синия кит',
-    capacity: 23,
+    title: 'ауд. Синий кит',
+    capacity: 63,
     locationDescription: 'Прямо направо по лестнице в синий кит',
   },
   {
     id: '2',
     title: 'ауд. Серый карп',
-    capacity: 23,
+    capacity: 44,
     locationDescription: 'Прямо направо по лестнице в Серый карп',
   },
   {
     id: '3',
     title: 'ауд. Красный окунь',
-    capacity: 23,
+    capacity: 65,
     locationDescription: 'Прямо направо по лестнице в Красный окунь',
   },
   {
     id: '4',
     title: 'ауд. Желтый желтохвостик',
-    capacity: 23,
+    capacity: 123,
     locationDescription: 'Прямо направо по лестнице в Желтый желтохвостик',
   },
 ];
 
-const testSchools = [
+export const testSchools = [
   {
     id: 'frontend',
     title: 'Школа разработки интерфейсов',
@@ -47,7 +46,7 @@ const testSchools = [
   },
 ];
 
-export const testData: IScheduleData = {
+export const mockData: ISchedule = {
   lessons,
   schools: testSchools,
   classrooms: testClassrooms,

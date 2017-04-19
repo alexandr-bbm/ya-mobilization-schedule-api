@@ -1,14 +1,4 @@
-import { IScheduleData } from './model';
+import { Schedule } from './models/schedule';
+import ScheduleError from './utils/errors';
 
-export class ScheduleInterface {
-
-  private scheduleData: IScheduleData;
-
-  constructor(data = testData) {
-    this.scheduleData = data;
-  }
-}
-
-import { testData } from './testData/index';
-
-console.log(testData);
+module.exports = { Schedule, ScheduleError};
