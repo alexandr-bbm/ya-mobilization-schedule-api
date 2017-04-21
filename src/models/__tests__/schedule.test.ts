@@ -182,13 +182,13 @@ describe('Schedule class', () => {
       };
       testSchedule.addLesson(newLesson);
 
-      const actual = JSON.stringify(testSchedule.getScheduleForSchool('frontend'));
-      const expected = JSON.stringify([
+      const actual = getIDs(testSchedule.getScheduleForSchool('frontend'));
+      const expected = getIDs([
         testLesson,
         newLesson
       ]);
 
-      expect(actual).toBe(expected);
+      expect(actual).toEqual(expected);
     });
   });
 
@@ -330,7 +330,7 @@ describe('Schedule class', () => {
 
   describe('lessonsToData', () => {
     it('maps lessons to lessons with expanded data about schools and classrooms', () => {
-      const actual = testSchedule.lessonsToData(testSchedule.lessons);
+      const actual = testSchedule.getLessons();
 
       const expected = [{
         title: 'Адаптивная вёрстка',

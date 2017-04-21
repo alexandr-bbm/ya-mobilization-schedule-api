@@ -1,20 +1,7 @@
-require('babel-polyfill');
-
 import { Schedule, ScheduleError } from '../../dist/schedule.bundle.js';
 import { tablify } from './tablify';
 
-async function log(msg) {
-	console.log(msg);
-	await sleep(5000);
-};
-async function logLong(msg) {
-	console.log(msg);
-	await sleep(15000);
-};
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
+const log = console.log;
 
 const prepareLessonForDisplay = l => ({
   ...l,
@@ -22,20 +9,15 @@ const prepareLessonForDisplay = l => ({
   schools: l.schools.map(s => s.title),
 });
 
-const getDisplayLessons = (lessons) => {
+const displayLessons = (lessons) => {
   const displayLessons = lessons.map(prepareLessonForDisplay);
-  return tablify(displayLessons);
+  log(`Результат:\n${tablify(displayLessons)}\n`);
 };
 
-const getDisplayObjects = (objects) => {
-	tablify(objects)
-};
-
-async function runForSchool (schedule) {
-	await log('Получим лекции для Школы разработки интерфейсов');
-
+const runForSchool = (schedule) => {
+	log('Получим лекции для Школы разработки интерфейсов');
   const frontendLessons = schedule.getScheduleForSchool('frontend');
-	await log(getDisplayLessons(frontendLessons));
+  displayLessons(frontendLessons);
 
   const dateRange = {
     min: {
@@ -45,15 +27,16 @@ async function runForSchool (schedule) {
       date: '25.04.2017',
     }
   };
-	await log('Получим лекции для Школы разработки интерфейсов в период с 10.04.2017 по 25.04.2017');
+	log('Получим лекции для Школы разработки интерфейсов в период с 10.04.2017 по 25.04.2017');
 	const frontendLessonsForDate = schedule.getScheduleForSchool('frontend', dateRange);
-	await log(getDisplayLessons(frontendLessonsForDate));
+  displayLessons(frontendLessonsForDate);
 };
 
-async function runForClassRoom (schedule) {
-	await log('Получим лекции для аудитории с id=1');
+const runForClassRoom = (schedule) => {
+	log('Получим лекции для аудитории с id=1');
 	const lessonsForClassroom = schedule.getScheduleForClassroom('1');
-	await log(getDisplayLessons(lessonsForClassroom));
+	displayLessons(lessonsForClassroom);
+
 
 	const dateRange = {
 		min: {
@@ -63,12 +46,12 @@ async function runForClassRoom (schedule) {
 			date: '18.05.2017',
 		}
 	};
-	await log('Получим лекции для аудитории с id=1 в период с 25.04.2017 по 18.05.2017');
+	log('Получим лекции для аудитории с id=1 в период с 25.04.2017 по 18.05.2017');
 	const lessonsForClassroomAndDate = schedule.getScheduleForClassroom('1', dateRange);
-	await log(getDisplayLessons(lessonsForClassroomAndDate));
+	displayLessons(lessonsForClassroomAndDate);
 };
 
-async function runLessson () {
+const runLessson = () => {
 	const schedule = new Schedule();
 	const newClassroom = {
 		id: '1',
@@ -96,45 +79,46 @@ async function runLessson () {
 
 	/** Пример работы с ошибками при добавлении лекции с несуществующей аудиторией и школой */
 	try {
-		await log('Попытка добавить лекцию с указанием несуществующих идентификаторов аудитории и школы');
+		log('Попытка добавить лекцию с указанием несуществующих идентификаторов аудитории и школы');
 		schedule.addLesson(newLesson);
 	} catch (err) {
 	  if (err instanceof ScheduleError) {
-			await log(`Получили ошибку с текстом: ${err.message}`);
+			log(`Отловили ошибку с текстом: ${err.message}`);
     } else {
-	    throw err; // произошла не предусмотренная ошибка
+	    throw err; // произошла не предусмотренная ошибка!
     }
   }
 
 	/** Пример корректного добавления лекции "с нуля". */
 
-  await log('Добавим аудиторию');
+  log('\nДобавим аудиторию');
 	schedule.addClassroom(newClassroom);
 
-	await log('Добавим школу');
+	log('Добавим школу');
 	schedule.addSchool(newSchool);
 
-	await log('Теперь существую валидные школа и аудитория, которую можно указать в лекции. Добавим лекциюю.');
+	log('Теперь существую валидные школа и аудитория, которую можно указать в лекции. Добавим лекциюю.');
 	schedule.addLesson(newLesson);
-  await log(getDisplayLessons(schedule.getLessons()));
+	displayLessons(schedule.getLessons());
 
-	await log('Изменим название и преподавателя лекции');
+	log('Изменим название и преподавателя лекции');
 	schedule.updateLesson('BJie7ZKPfAx', { title: 'Резиновая верстка', teacherName: 'Александр Газизов' });
-	await log(getDisplayLessons(schedule.getLessons()));
+	displayLessons(schedule.getLessons());
 
-  await log('Выведем все аудитории');
-	await log(tablify(schedule.getClassrooms()));
+  log('Выведем все аудитории');
+	log(tablify(schedule.getClassrooms()));
 
-	await log('Изменим название аудитории с id = 1');
+	log('Изменим название аудитории с id = 1');
 	schedule.updateClassroom('1', { title: 'Красный кит' });
-	await log(tablify(schedule.getClassrooms()));
+	log(tablify(schedule.getClassrooms()));
 };
 
-async function runExamples () {
+const runExamples = () => {
+	log('Добро пожаловать в демонстрацию возможностей библиотеки Ya-mobilization-schedule-api!');
 	const schedule = new Schedule({ mockMode: true });
-	await runForSchool(schedule);
-	await runForClassRoom(schedule);
-	await runLessson();
-}
+	runForSchool(schedule);
+	runForClassRoom(schedule);
+	runLessson();
+};
 
 runExamples();

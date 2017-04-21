@@ -216,7 +216,6 @@ export class Schedule {
             ScheduleErrorMessages.oneLessonInOneClassroomAtTime(
               newLesson.classroomId,
               existingLesson.id,
-              { newLesson, existingLesson },
             )
           );
         }

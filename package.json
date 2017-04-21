@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --watch",
+    "example": "node ./dist/example.bundle.js",
     "test": "jest"
   },
   "author": "",

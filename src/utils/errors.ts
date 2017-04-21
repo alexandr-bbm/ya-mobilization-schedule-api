@@ -1,14 +1,11 @@
-import * as ExtendableError from 'es6-error';
+// import * as ExtendableError from 'es6-error';
 
-/* tslint:disable */
-class ScheduleError extends ExtendableError {
+class ScheduleError {
   status: string;
+  message: string;
 
-  constructor(message, status?: string) {
-    super(message);
-    if (status) {
-      this.status = status;
-    }
+  constructor(message) {
+    this.message = message;
     return this;
   }
 }
@@ -19,9 +16,7 @@ export const ScheduleErrorMessages = {
 which is not enough for ${requiredCapacity} students`
   },
   oneLessonForSchoolAtTime: `New lesson overlaps with existing lesson for school.`,
-  oneLessonInOneClassroomAtTime (classroomId: string, ocuppiedLessonId: string, test?: any) {
-    console.log(test.newLesson);
-    console.log(test.existingLesson);
+  oneLessonInOneClassroomAtTime (classroomId: string, ocuppiedLessonId: string) {
     return `Classroom with id=${classroomId} at this time is occupied by existing lesson \
 with id=${ocuppiedLessonId}`
   },
