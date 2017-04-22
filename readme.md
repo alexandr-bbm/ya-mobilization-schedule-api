@@ -265,12 +265,12 @@ try {
 
 `npm run example` - исполняет демонстрационный бандл в среде NodeJS.
 
-`open index.html` - открывает html страницу, вывод происходит в консоль браузера.
+`open index.html` - открывает html страницу, вывод происходит в консоль браузера. [Страница на gh-pages](https://alexandr-bbm.github.io/ya-mobilization-schedule-api/) .
 
 ### Подключение при помощи скрипт-тега
 Все методы библиотеки, описанные в примере для модульного подключения, справедливы и при подключении
 бибилиотеки при помощи скрипт-тега напосредственно в html-странице. Но для наглядности приведен базовый пример в
-`script-example.html`
+`script-example.html`. [Страница на gh-pages](https://alexandr-bbm.github.io/ya-mobilization-schedule-api/script-example.html) .
 
 
 ## Разработка
