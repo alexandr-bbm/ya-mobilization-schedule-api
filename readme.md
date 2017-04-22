@@ -88,7 +88,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 }];
 */
 ```
-Больше примеров можно найти в `src/example/index.js`
+Полноценный пример можно найти в `src/example/index.js`
 
 ### Интерфейсы
 #### ISchedule
