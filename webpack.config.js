@@ -7,7 +7,7 @@ module.exports = {
 	output: {
 		filename: '[name].bundle.js',
 		path: __dirname + '/dist/',
-		library: ['Schedule'],
+		library: ['ScheduleLib'],
 		libraryTarget: 'umd',
 	},
 	module: {

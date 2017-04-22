@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["Schedule"] = factory();
+		exports["ScheduleLib"] = factory();
 	else
-		root["Schedule"] = factory();
+		root["ScheduleLib"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -461,7 +461,7 @@ process.umask = function () {
 
 
 (function webpackUniversalModuleDefinition(root, factory) {
-    if (true) module.exports = factory();else if (typeof define === 'function' && define.amd) define([], factory);else if (typeof exports === 'object') exports["Schedule"] = factory();else root["Schedule"] = factory();
+    if (true) module.exports = factory();else if (typeof define === 'function' && define.amd) define([], factory);else if (typeof exports === 'object') exports["ScheduleLib"] = factory();else root["ScheduleLib"] = factory();
 })(undefined, function () {
     return (/******/function (modules) {
             // webpackBootstrap
@@ -3568,7 +3568,7 @@ const runLesson = () => {
 		if (err instanceof _scheduleBundle.ScheduleError) {
 			log(`Отловили ошибку с текстом: ${err.message}`);
 		} else {
-			throw err; // произошла не предусмотренная ошибка!
+			throw err; // произошла непредусмотренная ошибка!
 		}
 	}
 

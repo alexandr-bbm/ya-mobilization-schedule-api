@@ -82,7 +82,7 @@ const runLesson = () => {
 	  if (err instanceof ScheduleError) {
 			log(`Отловили ошибку с текстом: ${err.message}`);
     } else {
-	    throw err; // произошла не предусмотренная ошибка!
+	    throw err; // произошла непредусмотренная ошибка!
     }
   }
 

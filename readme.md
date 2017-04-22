@@ -7,25 +7,30 @@
 * Конечный бандл библиотеки `dist/schedule.bundle.js` является UMD-модулем для универсальности.
 
 ### Подключение
-Вставьте скрипт-тег на вашу страницу
+1) Через скрипт тег
+Вставьте скрипт-тег на вашу страницу.
 ```
 <script src="https://alexandr-bbm.github.io/ya-mobilization-schedule-api/dist/schedule.bundle.js"></script>
+<script>
+    var Schedule = ScheduleLib.Schedule;
+    var ScheduleError = ScheduleLib.ScheduleError;
+    var schedule = new Schedule();
+</script>
 ```
 
-Либо установите библиотеку через npm !!!todo
+2) Через npm
 ```
-npm install https://github.com/alexandr-bbm/ya-mobilization-schedule-api/tarball/v0.5.6
+npm i alexandr-bbm/ya-mobilization-schedule-api
 ```
 
-Пример подключения при установке через npm (ES6):
 ```
 import { Schedule, ScheduleError } from 'ya-mobilization-schedule-api/dist/schedule.bundle.js';
-```
-
-Базовый пример использования библиотеки:
-
-```
 const schedule = new Schedule();
+```
+
+#### Базовый пример использования библиотеки:
+
+```
 const newClassroom = {
     id: '1',
     title: 'ауд. Синий кит',
@@ -47,10 +52,18 @@ const newLesson = {
     timeStart: "14:00",
     timeEnd: "16:00"
 };
+const dateRange = {
+    min: {
+        date: '25.04.2017',
+    },
+    max: {
+        date: '18.05.2017',
+    }
+};
 schedule.addClassroom(newClassroom);
 schedule.addSchool(newSchool);
 schedule.addLesson(newLesson);
-console.log(schedule.getLessons());
+console.log(schedule.getScheduleForSchool('frontend', dateRange));
 /* output:
 [{
     title: "Адаптивная вёрстка",
@@ -73,8 +86,7 @@ console.log(schedule.getLessons());
 }];
 */
 ```
-Больше примеров можно найти в `src/example/index.js`, а также в
-`src/models/__tests__/schedule.test.ts`
+Больше примеров можно найти в `src/example/index.js`
 
 ### Интерфейсы
 #### ISchedule
@@ -236,12 +248,13 @@ try {
   if (err instanceof ScheduleError) {
         console.log(`Отловили библиотечную ошибку с текстом: ${err.message}`);
 } else {
-    throw err; // произошла не предусмотренная ошибка!
+    throw err; // произошла непредусмотренная ошибка!
   }
 }
 ```
 
 ## Пример использования
+### Модульное подключение
 * Пример использования библиотеки - файл  `src/example/index.js`. Он играет роль модуля проекта, в который подключается библиотека.
 * В нем разработанная бибилотека подключается из бандла `dist/schedule.bundle.js`
 * Демонстрируется работа основных функций.
@@ -249,7 +262,14 @@ try {
 * Бандл примера собирается в бандл `example.bundle.js`.
 
 `npm run example` - исполняет демонстрационный бандл в среде NodeJS.
+
 `open index.html` - открывает html страницу, вывод происходит в консоль браузера.
+
+### Подключение при помощи скрипт-тега
+Все методы библиотеки, описанные в примере для модульного подключения, справедливы и при подключении
+бибилиотеки при помощи скрипт-тега напосредственно в html-странице. Но для наглядности приведен базовый пример в
+`script-example.html`
+
 
 ## Разработка
 `npm start` - разработка (одновременно для самой бибилиотеки и для файлов демонстрации)

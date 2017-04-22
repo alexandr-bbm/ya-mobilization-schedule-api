@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Демонстрация использования бибилиотеки при подключении с помощью скрипт-тега.</title>
+    <!--Подключаем библиотеку с помощью скрипт-тега.-->
+    <script src="https://alexandr-bbm.github.io/ya-mobilization-schedule-api/dist/schedule.bundle.js"></script>
+</head>
+<body>
+<h1 style="margin: 50px; text-align: center;">Откройте консоль браузера для вывода демонстрационных данных.</h1>
+<script>
+var Schedule = ScheduleLib.Schedule;
+var schedule = new Schedule();
+var newClassroom = {
+    id: '1',
+    title: 'ауд. Синий кит',
+    capacity: 63,
+    locationDescription: 'Прямо направо по лестнице в синий кит',
+};
+var newSchool =   {
+    id: 'frontend',
+    title: 'Школа разработки интерфейсов',
+    studentsNumber: 43,
+};
+var newLesson = {
+    title: "Адаптивная вёрстка",
+    teacherName: "Дмитрий Душкин",
+    id: "BJie7ZKPfAx",
+    schoolIds: ["frontend"],
+    classroomId: "1",
+    date: "08.05.2017",
+    timeStart: "14:00",
+    timeEnd: "16:00"
+};
+var dateRange = {
+    min: {
+        date: '25.04.2017',
+    },
+    max: {
+        date: '18.05.2017',
+    }
+};
+schedule.addClassroom(newClassroom);
+schedule.addSchool(newSchool);
+schedule.addLesson(newLesson);
+console.log(schedule.getScheduleForSchool('frontend', dateRange));
+</script>
+</body>
+</html>
