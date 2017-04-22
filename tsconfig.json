@@ -11,8 +11,7 @@
       "es2015",
       "es2016",
       "es5"
-    ],
-    "experimentalDecorators": true
+    ]
   },
   "include": [
     "./src/**/*"

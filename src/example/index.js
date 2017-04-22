@@ -119,11 +119,14 @@ const runLesson = () => {
 
 const runExamples = () => {
 	log('Добро пожаловать в демонстрацию возможностей библиотеки Ya-mobilization-schedule-api!');
-	log('Создадим экземпляр расписания с предзаполненными данными для демонстрации возможностей фильтрации');
+	log('Исходный файл находится в src/example/index.js!\n');
+	log('Создадим экземпляр расписания с предзаполненными данными для демонстрации возможностей фильтрации\n');
 	const schedule = new Schedule({ mockMode: true });
 	runForSchool(schedule);
 	runForClassroom(schedule);
 	runLesson();
+
+	log('\nНа этом все! Спасибо за внимание!');
 };
 
 runExamples();

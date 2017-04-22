@@ -16,9 +16,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -472,9 +472,10 @@ process.umask = function () {
             /******/function __webpack_require__(moduleId) {
                 /******/
                 /******/ // Check if module is in cache
-                /******/if (installedModules[moduleId])
+                /******/if (installedModules[moduleId]) {
                     /******/return installedModules[moduleId].exports;
-                /******/
+                    /******/
+                }
                 /******/ // Create a new module (and put it into the cache)
                 /******/var module = installedModules[moduleId] = {
                     /******/i: moduleId,
@@ -3605,11 +3606,14 @@ const runLesson = () => {
 
 const runExamples = () => {
 	log('Добро пожаловать в демонстрацию возможностей библиотеки Ya-mobilization-schedule-api!');
-	log('Создадим экземпляр расписания с предзаполненными данными для демонстрации возможностей фильтрации');
+	log('Исходный файл находится в src/example/index.js!\n');
+	log('Создадим экземпляр расписания с предзаполненными данными для демонстрации возможностей фильтрации\n');
 	const schedule = new _scheduleBundle.Schedule({ mockMode: true });
 	runForSchool(schedule);
 	runForClassroom(schedule);
 	runLesson();
+
+	log('\nНа этом все! Спасибо за внимание!');
 };
 
 runExamples();
