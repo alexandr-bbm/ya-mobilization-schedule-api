@@ -1,5 +1,5 @@
-import { Schedule, ScheduleError } from '../../dist/schedule.bundle.js';
 import { tablify } from './tablify';
+import { Schedule, ScheduleError } from '../../dist/schedule.bundle.js';
 
 const log = console.log;
 
@@ -32,11 +32,10 @@ const runForSchool = (schedule) => {
   displayLessons(frontendLessonsForDate);
 };
 
-const runForClassRoom = (schedule) => {
+const runForClassroom = (schedule) => {
 	log('Получим лекции для аудитории с id=1');
 	const lessonsForClassroom = schedule.getScheduleForClassroom('1');
 	displayLessons(lessonsForClassroom);
-
 
 	const dateRange = {
 		min: {
@@ -51,7 +50,7 @@ const runForClassRoom = (schedule) => {
 	displayLessons(lessonsForClassroomAndDate);
 };
 
-const runLessson = () => {
+const runLesson = () => {
 	const schedule = new Schedule();
 	const newClassroom = {
 		id: '1',
@@ -59,22 +58,20 @@ const runLessson = () => {
 		capacity: 63,
 		locationDescription: 'Прямо направо по лестнице в синий кит',
 	};
-
 	const newSchool =   {
 		id: 'frontend',
 		title: 'Школа разработки интерфейсов',
 		studentsNumber: 43,
 	};
-
 	const newLesson = {
-		"title": "Адаптивная вёрстка",
-		"teacherName": "Дмитрий Душкин",
-		"id": "BJie7ZKPfAx",
-		"schoolIds": ["frontend"],
-		"classroomId": "1",
-		"date": "08.05.2017",
-		"timeStart": "14:00",
-		"timeEnd": "16:00"
+		title: "Адаптивная вёрстка",
+		teacherName: "Дмитрий Душкин",
+		id: "BJie7ZKPfAx",
+		schoolIds: ["frontend"],
+		classroomId: "1",
+		date: "08.05.2017",
+		timeStart: "14:00",
+		timeEnd: "16:00"
   };
 
 	/** Пример работы с ошибками при добавлении лекции с несуществующей аудиторией и школой */
@@ -97,7 +94,7 @@ const runLessson = () => {
 	log('Добавим школу');
 	schedule.addSchool(newSchool);
 
-	log('Теперь существую валидные школа и аудитория, которую можно указать в лекции. Добавим лекциюю.');
+	log('Теперь существую валидные школа и аудитория, которые можно указать в лекции. Добавим лекциюю.');
 	schedule.addLesson(newLesson);
 	displayLessons(schedule.getLessons());
 
@@ -106,19 +103,27 @@ const runLessson = () => {
 	displayLessons(schedule.getLessons());
 
   log('Выведем все аудитории');
-	log(tablify(schedule.getClassrooms()));
+	log(tablify(schedule.getClassrooms()) + '\n');
 
 	log('Изменим название аудитории с id = 1');
 	schedule.updateClassroom('1', { title: 'Красный кит' });
-	log(tablify(schedule.getClassrooms()));
+	log(tablify(schedule.getClassrooms()) + '\n');
+
+  log('Выведем все школы');
+	log(tablify(schedule.getSchools()));
+
+	log('Изменим школу с id = frontend');
+	schedule.updateSchool('frontend', { title: 'Школа разработчиков на ReactJS', studentsNumber: 12 });
+	log(tablify(schedule.getSchools()));
 };
 
 const runExamples = () => {
 	log('Добро пожаловать в демонстрацию возможностей библиотеки Ya-mobilization-schedule-api!');
+	log('Создадим экземпляр расписания с предзаполненными данными для демонстрации возможностей фильтрации');
 	const schedule = new Schedule({ mockMode: true });
 	runForSchool(schedule);
-	runForClassRoom(schedule);
-	runLessson();
+	runForClassroom(schedule);
+	runLesson();
 };
 
 runExamples();

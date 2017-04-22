@@ -357,5 +357,22 @@ describe('Schedule class', () => {
       expect(actual).toEqual(expected);
     })
   });
+
+  describe('reset', () => {
+    it('resets schedule', () => {
+      testSchedule.reset();
+
+      const resetData = testSchedule.getScheduleData();
+      expect(resetData).toEqual({lessons: [], schools: [], classrooms: []});
+    });
+
+    it('resets schedule with initial data', () => {
+      const data = testSchedule.getScheduleData();
+      testSchedule.reset(data);
+
+      const resetData = testSchedule.getScheduleData();
+      expect(resetData).toEqual(data);
+    })
+  })
 });
 

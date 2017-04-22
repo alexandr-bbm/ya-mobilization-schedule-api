@@ -3,12 +3,22 @@ import { ISchool, School } from './school';
 import { Classroom, IClassroom } from './classroom';
 import { mockData } from '../mock/index';
 import ScheduleError, { ScheduleErrorMessages } from '../utils/errors';
-import { IDateRange, IInputDateRange, inputDateRangeToDateRange } from '../utils/dates';
+import { IInputDateRange, inputDateRangeToDateRange } from '../utils/dates';
 
 export interface ISchedule {
   lessons: ILesson[],
   schools: ISchool[],
   classrooms: IClassroom[];
+}
+export interface IScheduleLesson {
+  id: string;
+  title: string;
+  teacherName: string;
+  date: string;
+  timeStart: string;
+  timeEnd: string;
+  classroom: IClassroom;
+  schools: ISchool[];
 }
 
 interface IScheduleConstructorOptions {
@@ -37,7 +47,7 @@ export class Schedule {
   };
 
   private getScheduleForDateRange =
-    (inputDateRange?: IInputDateRange, externalPredicate?: (lesson: ILesson) => boolean): ILesson[] => {
+    (inputDateRange?: IInputDateRange, externalPredicate?: (lesson: ILesson) => boolean): IScheduleLesson[] => {
       let datePredicate = (lesson) => true;
 
       if (inputDateRange) {
@@ -80,7 +90,7 @@ export class Schedule {
   /**
    * Просмотр расписания школы в заданный интервал дат.
    */
-  public getScheduleForSchool = (schoolId: string, dateRange?: IInputDateRange): ILesson[] => {
+  public getScheduleForSchool = (schoolId: string, dateRange?: IInputDateRange): IScheduleLesson[] => {
     if (schoolId === undefined) {
       throw new ScheduleError(`Required parameter schoolId is undefined`);
     }
@@ -99,7 +109,7 @@ export class Schedule {
   /**
    * Просмотр графика лекций в аудитории в заданный интервал дат.
    */
-  public getScheduleForClassroom = (classroomId: string, dateRange?: IInputDateRange): ILesson[] => {
+  public getScheduleForClassroom = (classroomId: string, dateRange?: IInputDateRange): IScheduleLesson[] => {
     if (classroomId === undefined) {
       throw new ScheduleError(`Обязательный параметр classRoomId=${classroomId}`);
     }
@@ -115,11 +125,11 @@ export class Schedule {
     );
   };
 
-  public getLessons = () => this.lessonsToData(this.lessons);
+  public getLessons = (): IScheduleLesson[] => this.lessonsToData(this.lessons);
+  public getClassrooms = (): IClassroom[] => this.classrooms;
+  public getSchools = (): ISchool[] => this.schools;
 
-  public getClassrooms = () => this.classrooms;
-
-  public addLesson = (lesson: ILesson) => {
+  public addLesson = (lesson: ILesson): void => {
     this.checkClassroomIdExists(lesson.classroomId);
     lesson.schoolIds.forEach(id => this.checkSchoolIdExists(id));
     this.checkDuplicateItemId(lesson.id, this.lessons, 'Lesson');
@@ -131,29 +141,29 @@ export class Schedule {
     this.lessons.push(new Lesson(lesson));
   };
 
-  public addSchool = (school: ISchool) => {
+  public addSchool = (school: ISchool): void => {
     this.checkDuplicateItemId(school.id, this.schools, 'School');
     this.schools.push(new School(school));
   };
 
-  public addClassroom = (classroom: IClassroom) => {
+  public addClassroom = (classroom: IClassroom): void => {
     this.checkDuplicateItemId(classroom.id, this.classrooms, 'Classroom');
     this.classrooms.push(new Classroom(classroom));
   };
 
-  public updateLesson(id, lesson: ILesson) {
+  public updateLesson(id, lesson: ILesson): void {
     this.updateItem(id, lesson, this.lessons);
   }
 
-  public updateSchool(id: string, school: ISchool) {
+  public updateSchool(id: string, school: ISchool): void {
     this.updateItem(id, school, this.schools);
   }
 
-  public updateClassroom(id: string, classroom: IClassroom) {
+  public updateClassroom(id: string, classroom: IClassroom): void {
     this.updateItem(id, classroom, this.classrooms);
   }
 
-  private updateItem<T extends { id: string }>(id: string, patchItem: T, currentItems: T[]) {
+  private updateItem<T extends { id: string }>(id: string, patchItem: T, currentItems: T[]): void {
     const existingItem = currentItems.find(item => item.id === id);
     if (!existingItem) {
       throw new ScheduleError(`Item with id=${id} does not exist`);
@@ -228,7 +238,7 @@ export class Schedule {
     }
   };
 
-  public reset (data: ISchedule) {
+  public reset (data?: ISchedule): void {
     this.lessons = [];
     this.classrooms = [];
     this.schools = [];
@@ -252,7 +262,12 @@ export class Schedule {
     return this.classrooms.find(classroom => classroom.id === id);
   }
 
-  public lessonsToData = (lessons: ILesson[]) => {
+  public getScheduleData = (): ISchedule => {
+    const {lessons, schools, classrooms} = this;
+    return {lessons, schools, classrooms};
+  };
+
+  private lessonsToData = (lessons: ILesson[]): IScheduleLesson[] => {
     return lessons.map(lesson => {
       const dataLesson = ({
         ...lesson,

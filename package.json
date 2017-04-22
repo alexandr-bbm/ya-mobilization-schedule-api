@@ -1,5 +1,5 @@
 {
-  "name": "ya-mobilization-schedule-programm-interface",
+  "name": "ya-mobilization-schedule-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "example": "node ./dist/example.bundle.js",
     "test": "jest"
   },
-  "author": "",
+  "author": "Alexander Gazizov",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^19.2.2",
@@ -21,7 +21,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-regenerator-runtime": "^6.5.0",
     "cli-table": "^0.3.1",
-    "es6-error": "^4.0.2",
     "source-map-loader": "^0.2.1",
     "ts-jest": "^19.0.9",
     "typescript": "^2.2.2",

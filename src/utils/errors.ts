@@ -1,14 +1,11 @@
-// import * as ExtendableError from 'es6-error';
-
-class ScheduleError {
-  status: string;
-  message: string;
-
-  constructor(message) {
-    this.message = message;
-    return this;
+class ScheduleError extends Error {
+  constructor(m: string) {
+    super(m);
+    Object.setPrototypeOf(this, ScheduleError.prototype);
   }
 }
+
+
 
 export const ScheduleErrorMessages = {
   classroomCapacity (classroomId: string, classroomCapacity: number, requiredCapacity: number) {

@@ -16,7 +16,6 @@ export interface IInputDateRange {
   };
 }
 
-
 export function parseHoursMinutes (time: string) {
   const parsedTimeStart = time.match(/^(\d{2}):(\d{2})$/);
   if (!parsedTimeStart) {
