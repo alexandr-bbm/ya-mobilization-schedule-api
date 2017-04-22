@@ -9,8 +9,8 @@
 ### Подключение
 #### Через скрипт тег
 
-Вставьте скрипт-тег на вашу страницу.
-```
+Вставьте скрипт-тег на вашу страницу:
+```html
 <script src="https://alexandr-bbm.github.io/ya-mobilization-schedule-api/dist/schedule.bundle.js"></script>
 <script>
     var Schedule = ScheduleLib.Schedule;
@@ -21,19 +21,18 @@
 
 #### Через npm
 Установите зависимость:
-```
-npm i alexandr-bbm/ya-mobilization-schedule-api -D
-```
+
+`npm i alexandr-bbm/ya-mobilization-schedule-api -D`
 
 Подключите библиотеку в вашем проекте:
-```
+```javascript
 import { Schedule, ScheduleError } from 'ya-mobilization-schedule-api/dist/schedule.bundle.js';
 const schedule = new Schedule();
 ```
 
 #### Базовый пример использования библиотеки:
 
-```
+```javascript
 const newClassroom = {
     id: '1',
     title: 'ауд. Синий кит',
@@ -94,24 +93,24 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 ### Интерфейсы
 #### ISchedule
 Реализован в классе Schedule.
-```
+```javascript
 {
-  lessons: ILesson[],
-  schools: ISchool[],
+  lessons: ILesson[];
+  schools: ISchool[];
   classrooms: IClassroom[];
 }
 ```
 #### IScheduleConstructorOptions
 Интерфейс объекта настроек, передаваемый в конструктор класса Schedule
-```
+```javascript
 {
-    data?: ISchedule // данные для инициализации расписания.
-    mockMode?: boolean // флаг для создания расписания с тестовыми данными.
+    data?: ISchedule; // данные для инициализации расписания.
+    mockMode?: boolean; // флаг для создания расписания с тестовыми данными.
 }
 ```
 #### ILesson
 Интерфейс лекции. Реализован в классе Lesson.
-```
+```javascript
 {
   id: string;
   title: string;
@@ -126,7 +125,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 #### IScheduleLesson
 Интерфейс лекции для вывода (в отличии от ILesson вместо полей classroomId
 и schoolIds имеет classroom и schools)
-```
+```javascript
 {
   id: string;
   title: string;
@@ -140,7 +139,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 ```
 #### IClassroom
 Интерфейс аудитории. Реализован в классе Classroom.
-```
+```javascript
 {
   id: string;
   title: string;
@@ -150,7 +149,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 ```
 #### ISchool
 Интерфейс школы. Реализован в классе School.
-```
+```javascript
 {
   id: string;
   title: string;
@@ -160,7 +159,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 
 #### IInputDateRange
 Интерфейс ввода интервала дат для фильтрации расписания.
-```
+```javascript
 {
   min: {
     date: string; // формат 'dd.mm.yyyy'
@@ -195,7 +194,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 * Вместимость аудитории должна быть больше или равной количеству студентов на лекции.
 * Для одной школы не может быть двух лекций одновременно.
 * В одной аудитории не может быть одновременно двух разных лекций.
-* Время начала пары должно быть раньше времени конца.
+* Время начала пары должно быть раньше времени конца пары.
 
 #### addSchool (school: ISchool): void
 Добавить школу.
@@ -207,7 +206,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 
 
 #### getLessons (): IScheduleLesson[]
-Получить весь график лекций.
+Получить все лекции.
 #### getClassrooms (): IClassroom[]
 Получить все аудитории.
 #### getSchools (): ISchool[]
@@ -216,17 +215,17 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 #### updateLesson (id, lesson: ILesson): IScheduleLesson[]
 Редактировать лекцию.
 * `id` - идентификатор редактируемой лекции (проверяется валидность `id`)
-* `lesson` - объект с новыми значениями (проверяется наличие переданных ключей `lesson` в редактируемом объекте)
+* `lesson` - объект с новыми значениями (проверяется наличие ключей `lesson` в редактируемом объекте)
 
 #### updateClassroom (id: string, classroom: IClassroom): Classroom[]
 Редактировать аудиторию.
 * `id` - идентификатор редактируемой аудитории (проверяется валидность `id`)
-* `classroom` - объект с новыми значениями (проверяется наличие переданных ключей `classroom` в редактируемом объекте)
+* `classroom` - объект с новыми значениями (проверяется наличие ключей `classroom` в редактируемом объекте)
 
 #### updateSchool (id: string, school: ISchool): ISchool[]
 Редактировать школу.
 * `id` - идентификатор редактируемой школы (проверяется валидность `id`)
-* `school` - объект с новыми значениями (проверяется наличие переданных ключей `school` в редактируемом объекте)
+* `school` - объект с новыми значениями (проверяется наличие ключей `school` в редактируемом объекте)
 
 #### getScheduleData (): ISchedule
 Получить снимок состояния данных библиотеки.
@@ -239,7 +238,7 @@ console.log(schedule.getScheduleForSchool('frontend', dateRange));
 ### Класс ScheduleError
 При непрохождении любой из проверок библиотеки будет брошена ошибка класса `ScheduleError`
 Пример:
-```
+```javascript
 import { Schedule, ScheduleError } from '../../dist/schedule.bundle.js';
 const schedule = new Schedule();
 
